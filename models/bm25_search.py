@@ -8,6 +8,7 @@ import pickle
 from tqdm import tqdm
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
+import requests
 
 # === Ensure NLTK Resources Are Installed ===
 def ensure_nltk_data():
@@ -71,7 +72,7 @@ def load_or_cache_data(movie_path="data/ml-latest/movies.csv", cache_path="cache
     return df, tokenized_titles, bm25
 
 # === Exposed Function for Flask ===
-def search_specific(query, linkfile_path="data/movies_links.txt"):
+def search_specific(query, top_k=200, txt_path="data/movies_links.txt", movie_path="data/ml-latest/movies.csv", tags_path="data/ml-latest/genome-tags.csv", scores_path="data/ml-latest/genome-scores.csv", ratings_path="data/ml-latest/ratings.csv"):
     df, tokenized_titles, bm25 = load_or_cache_data()
     query_tokens = preprocess_text(query)
 
@@ -80,10 +81,10 @@ def search_specific(query, linkfile_path="data/movies_links.txt"):
     df = df[df['year'].notnull() & (df['year'] >= 1990)]
     df = df.sort_values(by='bm25_score', ascending=False)
 
-    top_titles = df.head(200)['title'].tolist()
+    top_titles = df.head(top_k)['title'].tolist()
 
     # Search in txt file
-    with open(linkfile_path, 'r', encoding='utf-8') as f:
+    with open(txt_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
 
     line_dict = {}
@@ -96,20 +97,23 @@ def search_specific(query, linkfile_path="data/movies_links.txt"):
     for title in top_titles:
         if title.lower() in line_dict:
             matched_lines.append(line_dict[title.lower()])
-        if len(matched_lines) == 10:
+        if len(matched_lines) == top_k:
             break
 
     # Filter final lines to contain all query tokens in title
-    final_lines = []
+    matched = []
     for line in matched_lines:
         movie_title = line.split('|')[0]
         title_tokens = set(preprocess_text(movie_title))
         if all(token in title_tokens for token in query_tokens):
             parts = line.split('|')
-            final_lines.append({
+            matched.append({
                 "title": parts[0].strip(),
                 "link1": parts[1].strip() if parts[1].strip().lower() != "null" else None,
                 "link2": parts[2].strip() if len(parts) > 2 and parts[2].strip().lower() != "null" else None
             })
 
-    return final_lines if final_lines else []
+    # After matched is built, do not fetch posters, do not include poster_url
+    for result in matched:
+        pass  # No poster logic
+    return matched if matched else []

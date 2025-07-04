@@ -8,6 +8,7 @@ import re
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from skorch import NeuralNetRegressor
+import requests
 
 # === RankNet Model ===
 class RankNet(nn.Module):
@@ -125,6 +126,10 @@ def recommend_movies_for_user(user_id):
     user_recs = cache_user_recs(model, df, feature_cols)
     title_map = load_title_link_map()
 
+    # Join with links.csv to get imdbId
+    links_df = pd.read_csv('data/ml-latest/links.csv')
+    movieid_to_imdbid = dict(zip(links_df['movieId'], links_df['imdbId']))
+
     if user_id not in user_recs:
         return []
 
@@ -141,5 +146,4 @@ def recommend_movies_for_user(user_id):
             })
         if len(results) >= 10:
             break
-
     return results  # list of dicts

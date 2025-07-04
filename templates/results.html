@@ -4,17 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie Recommender - Results</title>
+  <title>Gredien: Results</title>
   <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
   <div class="container">
     <div class="header">
       {% if is_recommendation %}
-        <h1>⭐ Your Must Watch Movies</h1>
+        <h1 class="gradient-title">⭐ Your Must Watch Movies</h1>
         <p>Personalized recommendations for User {{ user_id }}</p>
       {% else %}
-        <h1>🔍 Search Results</h1>
+        <h1 class="gradient-title">🔍 Search Results</h1>
         <p>Results for your search query</p>
       {% endif %}
       
@@ -44,6 +44,12 @@
         <div class="results-grid">
           {% for result in results %}
           <div class="movie-card">
+            {% if result.poster_url %}
+              <img class="movie-poster" src="{{ result.poster_url }}" alt="{{ result.title }} poster" loading="lazy" />
+              <div style="font-size:0.8em;word-break:break-all;color:#38f9d7;margin-bottom:6px;">{{ result.poster_url }}</div>
+            {% else %}
+              <div class="movie-poster placeholder">No Image</div>
+            {% endif %}
             <div class="movie-title">{{ result.title }}</div>
             <div class="movie-links">
               {% if result.link1 %}

@@ -1,4 +1,7 @@
 // static/app.js
+// Live animated background with bouncing points
+// Remove the bouncing balls/canvas background code
+
 function showLinks(link1, link2) {
   const linksDiv = document.getElementById('links');
   if (linksDiv) {

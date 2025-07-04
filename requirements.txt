@@ -1,11 +1,11 @@
 Flask
 pandas
 numpy
-scikit-learn
+scikit-learn==1.2.2
 rank_bm25
 nltk
 torch
-skorch
+skorch==0.13.0
 tqdm
 rapidfuzz
 gunicorn

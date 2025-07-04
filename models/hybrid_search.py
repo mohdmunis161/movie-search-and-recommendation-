@@ -7,6 +7,7 @@ from rank_bm25 import BM25Okapi
 from sklearn.metrics.pairwise import cosine_similarity
 from rapidfuzz import process, fuzz
 import nltk
+import requests
 
 # Ensure NLTK Resources
 def ensure_nltk_data():
@@ -162,7 +163,7 @@ def search_general(query, top_k=200, txt_path="data/movies_links.txt",
         lines = f.readlines()
     title_to_line = {line.split('|')[0].strip().lower(): line.strip() for line in lines}
 
-    # Match titles
+    # Match titles and build results without poster_url
     matched = []
     count = 0
     for _, row in top_df.iterrows():
@@ -178,5 +179,4 @@ def search_general(query, top_k=200, txt_path="data/movies_links.txt",
         count += 1
         if len(matched) >= 10 or count >= 100:
             break
-
     return matched  # list of dicts or empty list
