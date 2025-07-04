@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommender - User ID Entry</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎬 Movie Recommender</h1>
+            <p>Welcome! Please enter your User ID to get started.</p>
+        </div>
+
+        {% if error %}
+        <div class="error-message">
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+        <div class="user-id-section">
+            <h2>🔑 Enter Your User ID</h2>
+            <form action="/validate_user" method="POST" id="userForm">
+                <div class="input-group">
+                    <input type="number" name="user_id" placeholder="Enter User ID" required>
+                    <button type="submit" id="submitBtn">Continue</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="sample-ids">
+            <h3>📋 Sample User IDs</h3>
+            <p>Try one of these sample User IDs:</p>
+            <div class="id-list">
+                <span class="id-item">211360</span>
+                <span class="id-item">122101</span>
+                <span class="id-item">183489</span>
+                <span class="id-item">123359</span>
+                <span class="id-item">192886</span>
+                <span class="id-item">183624</span>
+                <span class="id-item">188996</span>
+                <span class="id-item">39466</span>
+                <span class="id-item">299307</span>
+                <span class="id-item">248977</span>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html> 

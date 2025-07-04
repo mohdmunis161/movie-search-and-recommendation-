@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommender - Main Menu</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎬 Movie Recommender</h1>
+            <p>Welcome, User {{ user_id }}!</p>
+            <a href="/logout" class="logout-btn">Logout</a>
+        </div>
+
+        <!-- Success message for pre-loaded recommendations -->
+        <div class="success-message">
+            <p>✅ Your personalized recommendations are ready! ({{ rec_count }} movies loaded)</p>
+            <small>Click "Must Watch" for instant results</small>
+        </div>
+
+        <div class="menu-section">
+            <h2>What would you like to do?</h2>
+            
+            <div class="menu-options">
+                <div class="menu-card">
+                    <div class="card-icon">🔍</div>
+                    <h3>Search Movies</h3>
+                    <p>Search for specific movies using our advanced search algorithms</p>
+                    <a href="/search_page" class="btn btn-primary">Start Searching</a>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-icon">⭐</div>
+                    <h3>Must Watch</h3>
+                    <p>Get personalized movie recommendations based on your preferences</p>
+                    <a href="/must_watch" class="btn btn-secondary">Get Recommendations</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html> 

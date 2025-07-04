@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommender - Search</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Movie Search</h1>
+            <div class="nav-links">
+                <a href="/main_menu" class="nav-link">← Back to Menu</a>
+                <a href="/logout" class="logout-btn">Logout</a>
+            </div>
+        </div>
+
+        <div class="search-section">
+            <h2>Search for Movies</h2>
+            <form action="/search" method="POST">
+                <div class="search-input-group">
+                    <input type="text" name="query" placeholder="Enter movie title, genre, or keywords..." required>
+                </div>
+
+                <div class="search-type-section">
+                    <h3>Choose Search Type:</h3>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="search_type" value="specific" checked>
+                            <span class="radio-custom"></span>
+                            <div class="option-content">
+                                <strong>Specific Search</strong>
+                                <small>Best for exact movie titles and precise matches</small>
+                            </div>
+                        </label>
+                        
+                        <label class="radio-option">
+                            <input type="radio" name="search_type" value="general">
+                            <span class="radio-custom"></span>
+                            <div class="option-content">
+                                <strong>General Search</strong>
+                                <small>Best for genres, themes, and semantic search</small>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="search-actions">
+                    <button type="submit" class="btn btn-primary">Search Movies</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html> 

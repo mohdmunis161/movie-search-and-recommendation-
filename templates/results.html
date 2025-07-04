@@ -1,0 +1,81 @@
+<!-- templates/results.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Recommender - Results</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      {% if is_recommendation %}
+        <h1>⭐ Your Must Watch Movies</h1>
+        <p>Personalized recommendations for User {{ user_id }}</p>
+      {% else %}
+        <h1>🔍 Search Results</h1>
+        <p>Results for your search query</p>
+      {% endif %}
+      
+      <div class="nav-links">
+        <a href="/main_menu" class="nav-link">← Back to Menu</a>
+        <a href="/logout" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <div class="results-section">
+      {% if message %}
+        <div class="no-results">
+          <p>{{ message }}</p>
+          <a href="/main_menu" class="btn btn-primary">Back to Menu</a>
+        </div>
+      {% elif results %}
+        <div class="results-header">
+          {% if is_recommendation %}
+            <h2>🎯 Recommended Movies for You</h2>
+            <p>Based on your viewing preferences and ratings</p>
+          {% else %}
+            <h2>📽️ Found Movies</h2>
+            <p>Showing top results for your search</p>
+          {% endif %}
+        </div>
+
+        <div class="results-grid">
+          {% for result in results %}
+          <div class="movie-card">
+            <div class="movie-title">{{ result.title }}</div>
+            <div class="movie-links">
+              {% if result.link1 %}
+                <a href="{{ result.link1 }}" target="_blank" class="movie-link">UHD (Recommended)</a>
+              {% endif %}
+              {% if result.link2 %}
+                <a href="{{ result.link2 }}" target="_blank" class="movie-link">HDMOVIE</a>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="results-actions">
+          {% if is_recommendation %}
+            <a href="/search_page" class="btn btn-secondary">Search for More Movies</a>
+          {% else %}
+            <a href="/must_watch" class="btn btn-secondary">Get Recommendations</a>
+          {% endif %}
+          <a href="/main_menu" class="btn btn-primary">Back to Menu</a>
+        </div>
+      {% else %}
+        <div class="no-results">
+          <p>No results found. Try a different search or get recommendations instead.</p>
+          <div class="no-results-actions">
+            <a href="/search_page" class="btn btn-secondary">Try Another Search</a>
+            <a href="/must_watch" class="btn btn-primary">Get Recommendations</a>
+          </div>
+        </div>
+      {% endif %}
+            </div>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

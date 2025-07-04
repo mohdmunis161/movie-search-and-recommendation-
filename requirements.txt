@@ -1,0 +1,10 @@
+Flask
+pandas
+numpy
+scikit-learn
+rank_bm25
+nltk
+torch
+skorch
+tqdm
+rapidfuzz
