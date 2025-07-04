@@ -2,3 +2,5 @@ cache/glove_dict.pkl filter=lfs diff=lfs merge=lfs -text
 data/ml-latest/genome-scores.csv filter=lfs diff=lfs merge=lfs -text
 data/ml-latest/ratings.csv filter=lfs diff=lfs merge=lfs -text
 models/glove.6B.100d.txt filter=lfs diff=lfs merge=lfs -text
+ml-latest/genome-scores.csv filter=lfs diff=lfs merge=lfs -text
+ml-latest/ratings.csv filter=lfs diff=lfs merge=lfs -text
