@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
-# exit on error
-set -o errexit
+# Build script for Render deployment
 
-# Install dependencies
-pip install -r requirements.txt
+echo "🚀 Starting build process..."
 
-# Download NLTK data if needed
-python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')" 
+# Download NLTK data
+echo "📥 Downloading NLTK data..."
+python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet')"
+
+# Create cache directory if it doesn't exist
+echo "📁 Creating cache directory..."
+mkdir -p cache
+
+echo "✅ Build process completed!" 

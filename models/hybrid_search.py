@@ -9,6 +9,9 @@ from rapidfuzz import process, fuzz
 import nltk
 import requests
 
+# Import OMDB poster fetcher
+from models.omdb_poster import get_movie_poster
+
 # Ensure NLTK Resources
 def ensure_nltk_data():
     try: nltk.data.find('tokenizers/punkt')
@@ -86,7 +89,7 @@ def load_movie_data_cached(movie_path, tags_path, scores_path, ratings_path, cac
     tokenized = [nltk.word_tokenize(doc.lower()) for doc in df['doc']]
 
     df.to_pickle(df_path)
-    with open(token_path, 'wb') as f:
+    with open(token_path, 'rb') as f:
         pickle.dump(tokenized, f)
 
     return df, tokenized
@@ -137,7 +140,7 @@ def search_general(query, top_k=200, txt_path="data/movies_links.txt",
                    tags_path="data/ml-latest/genome-tags.csv",
                    scores_path="data/ml-latest/genome-scores.csv",
                    ratings_path="data/ml-latest/ratings.csv",
-                   glove_path="data/models/glove.6B.100d.txt"):
+                   glove_path="models/glove.6B.100d.txt"):
 
     # Load data + cache
     df, tokenized_docs = load_movie_data_cached(movie_path, tags_path, scores_path, ratings_path)
@@ -163,7 +166,7 @@ def search_general(query, top_k=200, txt_path="data/movies_links.txt",
         lines = f.readlines()
     title_to_line = {line.split('|')[0].strip().lower(): line.strip() for line in lines}
 
-    # Match titles and build results without poster_url
+    # Match titles and build results with poster fetching
     matched = []
     count = 0
     for _, row in top_df.iterrows():
@@ -171,10 +174,15 @@ def search_general(query, top_k=200, txt_path="data/movies_links.txt",
         key = title.lower()
         if key in title_to_line:
             parts = title_to_line[key].split('|')
+            
+            # Fetch poster from OMDB API
+            poster_url = get_movie_poster(parts[0].strip())
+            
             matched.append({
                 "title": parts[0].strip(),
                 "link1": parts[1].strip() if parts[1].strip().lower() != 'null' else None,
-                "link2": parts[2].strip() if len(parts) > 2 and parts[2].strip().lower() != 'null' else None
+                "link2": parts[2].strip() if len(parts) > 2 and parts[2].strip().lower() != 'null' else None,
+                "poster_url": poster_url
             })
         count += 1
         if len(matched) >= 10 or count >= 100:

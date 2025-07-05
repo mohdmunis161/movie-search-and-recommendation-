@@ -10,6 +10,9 @@ from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 import requests
 
+# Import OMDB poster fetcher
+from models.omdb_poster import get_movie_poster
+
 # === Ensure NLTK Resources Are Installed ===
 def ensure_nltk_data():
     try:
@@ -107,13 +110,15 @@ def search_specific(query, top_k=200, txt_path="data/movies_links.txt", movie_pa
         title_tokens = set(preprocess_text(movie_title))
         if all(token in title_tokens for token in query_tokens):
             parts = line.split('|')
+            
+            # Fetch poster from OMDB API
+            poster_url = get_movie_poster(parts[0].strip())
+            
             matched.append({
                 "title": parts[0].strip(),
                 "link1": parts[1].strip() if parts[1].strip().lower() != "null" else None,
-                "link2": parts[2].strip() if len(parts) > 2 and parts[2].strip().lower() != "null" else None
+                "link2": parts[2].strip() if len(parts) > 2 and parts[2].strip().lower() != "null" else None,
+                "poster_url": poster_url
             })
 
-    # After matched is built, do not fetch posters, do not include poster_url
-    for result in matched:
-        pass  # No poster logic
     return matched if matched else []

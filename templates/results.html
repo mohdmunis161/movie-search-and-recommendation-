@@ -11,16 +11,15 @@
   <div class="container">
     <div class="header">
       {% if is_recommendation %}
-        <h1 class="gradient-title">⭐ Your Must Watch Movies</h1>
-        <p>Personalized recommendations for User {{ user_id }}</p>
+        <h1 class="gradient-title">⭐ Your Movie Recommendations</h1>
+        <p>Personalized recommendations based on your preferences</p>
       {% else %}
         <h1 class="gradient-title">🔍 Search Results</h1>
         <p>Results for your search query</p>
       {% endif %}
       
       <div class="nav-links">
-        <a href="/main_menu" class="nav-link">← Back to Menu</a>
-        <a href="/logout" class="logout-btn">Logout</a>
+        <a href="/" class="nav-link">← Back to Home</a>
       </div>
     </div>
 
@@ -28,13 +27,13 @@
       {% if message %}
         <div class="no-results">
           <p>{{ message }}</p>
-          <a href="/main_menu" class="btn btn-primary">Back to Menu</a>
+          <a href="/" class="btn btn-primary">Back to Home</a>
         </div>
       {% elif results %}
         <div class="results-header">
           {% if is_recommendation %}
             <h2>🎯 Recommended Movies for You</h2>
-            <p>Based on your viewing preferences and ratings</p>
+            <p>Based on your genre preferences</p>
           {% else %}
             <h2>📽️ Found Movies</h2>
             <p>Showing top results for your search</p>
@@ -44,12 +43,11 @@
         <div class="results-grid">
           {% for result in results %}
           <div class="movie-card">
-            {% if result.poster_url %}
-              <img class="movie-poster" src="{{ result.poster_url }}" alt="{{ result.title }} poster" loading="lazy" />
-              <div style="font-size:0.8em;word-break:break-all;color:#38f9d7;margin-bottom:6px;">{{ result.poster_url }}</div>
-            {% else %}
-              <div class="movie-poster placeholder">No Image</div>
-            {% endif %}
+            <img class="movie-poster"
+                 src="{{ result.poster_url if result.poster_url else 'https://i.pinimg.com/736x/2c/d5/f9/2cd5f95facd32432677a2a7f75391468.jpg' }}"
+                 alt="{{ result.title }} poster"
+                 loading="lazy"
+                 onerror="this.onerror=null;this.src='https://i.pinimg.com/736x/2c/d5/f9/2cd5f95facd32432677a2a7f75391468.jpg';" />
             <div class="movie-title">{{ result.title }}</div>
             <div class="movie-links">
               {% if result.link1 %}
@@ -67,20 +65,19 @@
           {% if is_recommendation %}
             <a href="/search_page" class="btn btn-secondary">Search for More Movies</a>
           {% else %}
-            <a href="/must_watch" class="btn btn-secondary">Get Recommendations</a>
+            <a href="/genre_recommendations" class="btn btn-secondary">Get Recommendations</a>
           {% endif %}
-          <a href="/main_menu" class="btn btn-primary">Back to Menu</a>
+          <a href="/" class="btn btn-primary">Back to Home</a>
         </div>
       {% else %}
         <div class="no-results">
           <p>No results found. Try a different search or get recommendations instead.</p>
           <div class="no-results-actions">
             <a href="/search_page" class="btn btn-secondary">Try Another Search</a>
-            <a href="/must_watch" class="btn btn-primary">Get Recommendations</a>
+            <a href="/genre_recommendations" class="btn btn-primary">Get Recommendations</a>
           </div>
         </div>
       {% endif %}
-            </div>
     </div>
     <script src="/static/js/app.js"></script>
 </body>

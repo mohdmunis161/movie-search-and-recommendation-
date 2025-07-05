@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gredien: Genre-Based Recommendations</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="gradient-title">🎯 Movie Recommendations</h1>
+            <p>Tell us about your movie preferences to get personalized recommendations!</p>
+        </div>
+
+        {% if error %}
+        <div class="error-message">
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+        <div class="genre-section">
+            <h2>🎭 What genres do you enjoy?</h2>
+            <p>Enter your favorite genres, keywords, or preferences (e.g., "action comedy latest" or "drama thriller 2020s")</p>
+            
+            <form action="/get_genre_recommendations" method="POST" id="genreForm">
+                <div class="input-group">
+                    <textarea name="genre_preferences" placeholder="Enter your preferences (e.g., action comedy latest, drama thriller, sci-fi adventure)" rows="3" required></textarea>
+                    <button type="submit" id="submitBtn">Get Recommendations</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="popular-genres">
+            <h3>🎬 Popular Genres</h3>
+            <p>You can mention any of these genres:</p>
+            <div class="genre-tags">
+                <span class="genre-tag">Action</span>
+                <span class="genre-tag">Comedy</span>
+                <span class="genre-tag">Drama</span>
+                <span class="genre-tag">Thriller</span>
+                <span class="genre-tag">Romance</span>
+                <span class="genre-tag">Sci-Fi</span>
+                <span class="genre-tag">Horror</span>
+                <span class="genre-tag">Adventure</span>
+                <span class="genre-tag">Fantasy</span>
+                <span class="genre-tag">Animation</span>
+                <span class="genre-tag">Crime</span>
+                <span class="genre-tag">Mystery</span>
+                <span class="genre-tag">Documentary</span>
+                <span class="genre-tag">Latest</span>
+                <span class="genre-tag">Classic</span>
+            </div>
+        </div>
+
+        <div class="back-section">
+            <a href="/" class="back-btn">← Back to Home</a>
+        </div>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html> 

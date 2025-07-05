@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gredien: User ID Entry</title>
+    <title>Gredien: Movie Search & Recommendations</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="gradient-title">🎬 Movie Recommender</h1>
-            <p>Welcome! Please enter your User ID to get started.</p>
+            <h1 class="gradient-title">🎬 Movie Search & Recommendations</h1>
+            <p>Choose your preferred option to get started!</p>
         </div>
 
         {% if error %}
@@ -19,30 +19,21 @@
         </div>
         {% endif %}
 
-        <div class="user-id-section">
-            <h2>🔑 Enter Your User ID</h2>
-            <form action="/validate_user" method="POST" id="userForm">
-                <div class="input-group">
-                    <input type="number" name="user_id" placeholder="Enter User ID" required>
-                    <button type="submit" id="submitBtn">Continue</button>
-                </div>
-            </form>
-        </div>
+        <div class="options-section">
+            <div class="option-card">
+                <h2>🔍 Search Movies</h2>
+                <p>Search for specific movies by title, genre, or keywords</p>
+                <form action="/search_page" method="GET">
+                    <button type="submit" class="option-btn">Start Searching</button>
+                </form>
+            </div>
 
-        <div class="sample-ids">
-            <h3>📋 Sample User IDs</h3>
-            <p>Try one of these sample User IDs:</p>
-            <div class="id-list">
-                <span class="id-item">211360</span>
-                <span class="id-item">122101</span>
-                <span class="id-item">183489</span>
-                <span class="id-item">123359</span>
-                <span class="id-item">192886</span>
-                <span class="id-item">183624</span>
-                <span class="id-item">188996</span>
-                <span class="id-item">39466</span>
-                <span class="id-item">299307</span>
-                <span class="id-item">248977</span>
+            <div class="option-card">
+                <h2>🎯 Get Recommendations</h2>
+                <p>Get personalized movie recommendations based on your taste</p>
+                <form action="/genre_recommendations" method="GET">
+                    <button type="submit" class="option-btn">Get Recommendations</button>
+                </form>
             </div>
         </div>
     </div>
